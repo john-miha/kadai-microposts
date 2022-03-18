@@ -1,3 +1,4 @@
+<!-- 共通レイアウトとして作ったお気に入り一覧を表示-->
 <div class="row">
   <aside class="col-sm-4">
     <div class="card">
@@ -17,6 +18,7 @@
       <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(followers_user_path(@user)) %>">Followers  <span class="badge bg-secondary"><%= @count_followers %></span></a></li>
       <li class="nav-item"><a href="<%= likes_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(likes_user_path(@user)) %>">Likes  <span class="badge bg-secondary"><%= @count_favorites %></span></a></li>
     </ul>
-    <%= render 'users', users: @followings %>
+    <%= render 'favorites/favorites', user: @user %>
   </div>
 </div>
+
