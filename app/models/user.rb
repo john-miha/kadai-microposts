@@ -5,17 +5,17 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password
   
-  has_many :microposts
+  has_many :microposts, dependent: :destroy
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow
-  has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
+  has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id', dependent: :destroy
   has_many :followers, through: :reverses_of_relationship, source: :user
   
   #お気に入り機能。
   #中間テーブルへの参照
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   #中間テーブルへの逆向きの参照
-  has_many :reverses_of_favorite, class_name: 'favorite', foreign_key: 'micropost_id' 
+  has_many :reverses_of_favorite, class_name: 'favorite', foreign_key: 'micropost_id'
   #あるユーザーがお気に入りに登録しているマイクロポスト
   has_many :fav_microposts, through: :favorites, source: :micropost
   #あるマイクロポストをお気に入りに登録しているユーザー
@@ -54,7 +54,6 @@ class User < ApplicationRecord
   end
   
   def unfavorite(micropost)
-
     favorite = self.favorites.find_by(micropost_id: micropost.id)
     favorite.destroy if favorite
   end

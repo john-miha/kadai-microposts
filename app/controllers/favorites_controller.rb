@@ -9,7 +9,6 @@ class FavoritesController < ApplicationController
   end
 
 
-#ここから下は未着手
   def destroy
     micropost = Micropost.find(params[:micropost_id])
     current_user.unfavorite(micropost)
